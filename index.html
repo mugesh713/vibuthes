@@ -1,0 +1,672 @@
+<!doctype html>
+<html lang="en" class="is-loading">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Alai — ROOTED IN INDIA READY FOR THE WORLD.</title>
+<meta name="description" content="Premium Indian spices, carefully sourced and prepared for international markets. Turmeric, cumin seeds, coriander seeds, red chilli and black pepper." />
+<meta name="theme-color" content="#0b0b0f" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23f0a81e'/%3E%3Ctext x='16' y='23' font-family='Arial,sans-serif' font-size='18' font-weight='bold' fill='%23111' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,400..900&family=Inter:wght@300..700&family=Space+Mono:wght@400;700&display=swap" />
+<link rel="stylesheet" href="/src/styles/main.css" />
+
+<style>
+/* ==========================================================================
+   INSIGHTS & ENHANCED CARD STYLING
+   ========================================================================== */
+
+.cards--grid-3 {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 1.75rem;
+  margin-top: 2.5rem;
+}
+
+@media (min-width: 640px) {
+  .cards--grid-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .cards--grid-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Base Enhanced Card Architecture */
+.card--enhanced {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  overflow: hidden;
+  backdrop-filter: blur(8px);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.4s ease,
+              box-shadow 0.4s ease,
+              background 0.4s ease;
+  will-change: transform;
+}
+
+/* Hover & Focus state */
+.card--enhanced:hover {
+  transform: translateY(-8px) scale(1.01);
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(240, 168, 30, 0.4);
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5),
+              0 0 20px rgba(240, 168, 30, 0.15);
+  cursor: pointer;
+}
+
+/* Card Media Container & Zoom */
+.card--enhanced .card__media {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background-color: #0b0b0f;
+}
+
+.card--enhanced .card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), filter 0.5s ease;
+  filter: brightness(0.9) contrast(1.05);
+}
+
+.card--enhanced:hover .card__media img {
+  transform: scale(1.08);
+  filter: brightness(1) contrast(1.1);
+}
+
+/* Floating Badges with Accent Dot */
+.card--enhanced .card__tag {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.75rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #fff;
+  background: rgba(11, 11, 15, 0.75);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 20px;
+  transition: border-color 0.3s ease, background 0.3s ease;
+}
+
+.tag-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #f0a81e;
+  box-shadow: 0 0 6px #f0a81e;
+}
+
+/* Card Content Area */
+.card--enhanced .card__body {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  padding: 1.5rem;
+}
+
+.card--enhanced .card__meta {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 0.5rem;
+}
+
+.card--enhanced .card__title {
+  font-size: 1.25rem;
+  line-height: 1.35;
+  margin-bottom: 0.75rem;
+  color: #fff;
+  transition: color 0.3s ease;
+}
+
+.card--enhanced:hover .card__title {
+  color: #f0a81e;
+}
+
+.card--enhanced .body {
+  font-size: 0.925rem;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.55;
+  margin-bottom: 1.5rem;
+  flex-grow: 1;
+}
+
+/* Bottom CTA Link Inside Card */
+.card--enhanced .card__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.825rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: rgba(255, 255, 255, 0.8);
+  transition: color 0.3s ease;
+}
+
+.card--enhanced .card__link .arrow {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card--enhanced:hover .card__link {
+  color: #f0a81e;
+}
+
+.card--enhanced:hover .card__link .arrow {
+  transform: translateX(6px);
+}
+
+/* Smooth Entrance Staggering Animation */
+@keyframes cardFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.cards--grid-3 .card--enhanced {
+  animation: cardFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: calc(var(--i, 0) * 0.12s);
+}
+</style>
+</head>
+<body>
+
+<div class="loader" data-loader>
+  <div class="loader__word">Alai</div>
+  <div class="loader__bar"><i data-loader-bar></i></div>
+  <div class="loader__pct"><span data-loader-pct>0</span>%</div>
+</div>
+
+<header data-chrome="header"></header>
+<nav data-chrome="drawer"></nav>
+
+<main id="top">
+
+<!-- ============================ 2.1 HERO ============================ -->
+<section class="act act--hero dark">
+  <div class="act__track act__track--hero" data-act-track>
+    <div class="act__pin">
+      <div class="hero__grid" aria-hidden="true"></div>
+      <div class="act__stage" data-gl="globe" aria-hidden="true"></div>
+
+      <div class="act__ui">
+        <div class="wrap hero__inner">
+          <div data-stage="0,0.52">
+            <span class="mono eyebrow">Indian spices · Global possibilities</span>
+            <h1 class="h-display hero__title">
+              <span class="line">Rooted in India.</span>
+              <span class="line line--indent"><em>Ready for the world.</em></span>
+            </h1>
+          </div>
+
+          <div class="hero__foot" data-stage="0.02,0.46">
+            <p class="lead hero__sub">
+              Premium Indian spices, carefully sourced and prepared for global
+              markets. From turmeric to cumin, coriander, red chilli and black
+              pepper, we connect India's agricultural richness with buyers
+              around the world.
+            </p>
+            <div class="hero__actions">
+              <a href="products.html" class="btn">Explore our products <span class="arrow" aria-hidden="true">→</span></a>
+              <a href="contact.html" class="btn btn--ghost">Talk to us</a>
+            </div>
+          </div>
+
+          <div class="hero__dive" data-stage="0.62,1.05">
+            <h2 class="h1">We source spices.<br />We build trust.</h2>
+            <p class="lead">Quality begins at the source.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="scroll-hint mono"><span class="scroll-hint__line"></span><span>Scroll</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="ticker" aria-hidden="true">
+  <div class="marquee" data-marquee data-speed="70">
+    <div class="marquee__track" data-marquee-track>
+      <span class="ticker__item mono">Turmeric</span>
+      <span class="ticker__item mono">Cumin seeds</span>
+      <span class="ticker__item mono">Coriander seeds</span>
+      <span class="ticker__item mono">Red chilli</span>
+      <span class="ticker__item mono">Black pepper</span>
+      <span class="ticker__item mono">Indian spices</span>
+      <span class="ticker__item mono">Global possibilities</span>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 2.2 PROMISE + 2.3 CAPABILITY ==================== -->
+<section class="intro">
+  <div class="wrap">
+    <div class="intro__grid">
+      <div>
+        <span class="mono eyebrow">Our promise</span>
+        <h2 class="h1" data-split-text>We source spices. We build trust.</h2>
+        <span class="rule" data-rule></span>
+      </div>
+      <div data-reveal>
+        <p class="lead" style="margin-bottom:1.75rem">
+          Quality begins at the source. We focus on carefully selected Indian
+          spices, clear specifications and dependable communication so
+          international buyers can source with greater confidence.
+        </p>
+        <a href="about.html" class="btn btn--outline">About us <span class="arrow" aria-hidden="true">→</span></a>
+      </div>
+    </div>
+    <div class="capstrip" data-sweep>
+      <div class="cap">
+        <span class="cap__figure" data-cipher="5" data-pad="2">00</span>
+        <span class="cap__label mono">Core spice products</span>
+      </div>
+      <div class="cap">
+        <span class="cap__figure" data-cipher="1" data-pad="2">00</span>
+        <span class="cap__label mono">Primary focus — turmeric</span>
+      </div>
+      <div class="cap">
+        <span class="cap__figure">India</span>
+        <span class="cap__label mono">Sourcing-led business</span>
+      </div>
+      <div class="cap">
+        <span class="cap__figure">Global</span>
+        <span class="cap__label mono">Export-focused approach</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= 2.4 THE RANGE (ACT) ======================= -->
+<section class="act act--range dark" id="range">
+  <div class="act__track act__track--range" data-act-track>
+    <div class="act__pin">
+      <div class="act__stage" data-gl="cube" aria-hidden="true"></div>
+
+      <div class="act__ui wrap">
+        <div class="act__head" data-stage="0,0.14">
+          <span class="mono eyebrow">Our products</span>
+          <h2 class="h1">Everything starts with the right spice.</h2>
+        </div>
+
+        <div class="act__caption">
+          <div class="act__cap" data-stage="0.00,0.20">
+            <span class="mono act__label">Turmeric · Curcuma longa</span>
+            <p class="act__text">Our primary product focus. Selected with attention to colour, aroma, cleanliness and agreed buyer specifications.</p>
+          </div>
+          <div class="act__cap" data-stage="0.20,0.40">
+            <span class="mono act__label">Cumin seeds · Cuminum cyminum</span>
+            <p class="act__text">Selected for characteristic aroma, flavour, appearance and overall condition according to agreed requirements.</p>
+          </div>
+          <div class="act__cap" data-stage="0.40,0.60">
+            <span class="mono act__label">Coriander seeds · Coriandrum sativum</span>
+            <p class="act__text">Sourced for characteristic aroma, flavour and visual quality for food and spice applications.</p>
+          </div>
+          <div class="act__cap" data-stage="0.60,0.80">
+            <span class="mono act__label">Red chilli · Capsicum annuum</span>
+            <p class="act__text">For buyers seeking the desired combination of colour, heat, flavour and product condition.</p>
+          </div>
+          <div class="act__cap" data-stage="0.80,0.85">
+            <span class="mono act__label">Black pepper · Piper nigrum</span>
+            <p class="act__text">Selected for appearance, aroma, pungency and consistency according to the agreed requirement.</p>
+          </div>
+           <div class="act__cap" data-stage="0.85,1.06">
+            <span class="mono act__label">Cardamon · Piper nigrum</span>
+            <p class="act__text">Selected for appearance, aroma, pungency and consistency according to the agreed requirement.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="act__progress"><i data-act-progress></i></div>
+    </div>
+  </div>
+</section>
+
+<section class="services" id="products">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <span class="mono eyebrow">The range</span>
+        <h2 class="h1" data-split-text>Everything starts with the right spice.</h2>
+      </div>
+      <a href="products.html" class="btn btn--outline">View all products <span class="arrow" aria-hidden="true">→</span></a>
+    </div>
+    <p class="lead intro-lede" data-reveal>
+      Our portfolio focuses on carefully selected Indian spices for
+      international food, processing, wholesale and distribution markets. We
+      begin with a focused range and aim to build dependable supply
+      relationships product by product.
+    </p>
+    <div class="pgrid" data-sweep data-product-cards></div>
+  </div>
+</section>
+
+<!-- ======================= 2.5 TURMERIC FEATURE ======================= -->
+<section class="feature">
+  <div class="wrap feature__grid">
+    
+    <!-- Automatic Rounded Carousel Container -->
+    <div class="feature__media feature__carousel" data-uncover data-carousel>
+      <div class="carousel__track" data-carousel-track>
+        
+        <div class="carousel__slide is-active">
+          <img src="assets/photo/turmeric-wide.webp" width="1400" height="933" alt="Indian turmeric roots" loading="lazy" decoding="async" />
+        </div>
+        
+        <div class="carousel__slide">
+          <img src="assets/photo/turmeric-powder.webp" width="1400" height="933" alt="Pure Indian turmeric powder" loading="lazy" decoding="async" />
+        </div>
+        
+        <div class="carousel__slide">
+          <img src="assets/photo/turmeric-farm.webp" width="1400" height="933" alt="Freshly harvested turmeric" loading="lazy" decoding="async" />
+        </div>
+
+      </div>
+    </div>
+
+    <div class="feature__body" data-reveal>
+      <span class="mono eyebrow">Primary focus</span>
+      <h2 class="h1">The golden spice.<br />From India.</h2>
+      <p class="lead" style="margin:1.25rem 0 1.75rem">
+        Turmeric is at the heart of what we do. We source Indian turmeric with
+        attention to product quality, colour, aroma, cleanliness and buyer
+        requirements, with specifications agreed according to the destination
+        market and application.
+      </p>
+      <a href="turmeric.html" class="btn">Explore turmeric <span class="arrow" aria-hidden="true">→</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ========================== 2.6 QUALITY (ACT) ========================== -->
+<section class="act act--lift dark" id="quality">
+  <div class="act__track act__track--lift" data-act-track>
+    <div class="act__pin">
+      <div class="act__stage" data-gl="lift" aria-hidden="true"></div>
+
+      <div class="act__ui wrap">
+        <div class="act__head" data-stage="0,0.34">
+          <span class="mono eyebrow">Quality</span>
+          <h2 class="h1">Quality at every stage.</h2>
+        </div>
+
+        <div class="act__caption">
+          <div class="act__cap" data-stage="0.06,0.36">
+            <span class="act__step">01</span>
+            <span class="mono act__label">Careful sourcing</span>
+            <p class="act__text">Quality does not begin when a product reaches the port. It begins with sourcing.</p>
+          </div>
+          <div class="act__cap" data-stage="0.36,0.66">
+            <span class="act__step">02</span>
+            <span class="mono act__label">Selection &amp; handling</span>
+            <p class="act__text">It continues through selection, responsible handling, packaging and shipment preparation.</p>
+          </div>
+          <div class="act__cap" data-stage="0.66,1.05">
+            <span class="act__step">03</span>
+            <span class="mono act__label">Export readiness</span>
+            <p class="act__text">Our approach is to understand buyer requirements clearly and coordinate each stage with care.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="act__progress"><i data-act-progress></i></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================= 2.7 WHY US ============================= -->
+<section class="why" id="why">
+  <div class="wrap">
+    <div class="why__grid">
+      <div>
+        <span class="mono eyebrow">Why us</span>
+        <h2 class="h1" data-split-text>Why choose us?</h2>
+        <p class="body" style="margin-top:1.25rem;max-width:44ch">
+          We are building our business around a simple principle: international
+          trade works best when product quality and communication are treated
+          with equal importance.
+        </p>
+      </div>
+      <div class="why__list" data-why-list></div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= 2.8 EXPORT PROCESS (ACT) ======================= -->
+<section class="act act--road dark" id="process">
+  <div class="act__track act__track--road" data-act-track>
+    <div class="act__pin">
+      <div class="act__stage" data-gl="road" aria-hidden="true"></div>
+
+      <div class="act__ui wrap">
+        <div class="act__head" data-stage="0,0.30">
+          <span class="mono eyebrow">Export process</span>
+          <h2 class="h1">From source.<br />To shipment.</h2>
+        </div>
+
+        <div class="act__side">
+          <div class="act__feat" data-stage="0.10,0.40">
+            <h3 class="h3">Discuss, then source</h3>
+            <p class="body">Share product, quantity, destination and specifications. We identify suitable supply based on the agreed requirement.</p>
+          </div>
+          <div class="act__feat" data-stage="0.40,0.68">
+            <h3 class="h3">Review and prepare</h3>
+            <p class="body">Confirm product characteristics, quantity and packaging, then coordinate packing and shipment preparation.</p>
+          </div>
+          <div class="act__feat" data-stage="0.68,1.05">
+            <h3 class="h3">Document and ship</h3>
+            <p class="body">Coordinate required trade and shipment documentation, dispatch through the agreed route, and keep you informed.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="act__progress"><i data-act-progress></i></div>
+    </div>
+  </div>
+</section>
+
+<section class="services">
+  <div class="wrap">
+    <span class="mono eyebrow">A clear process</span>
+    <h2 class="h1" data-split-text>So buyers know what to expect.</h2>
+    <span class="rule" data-rule></span>
+    <ol class="steps" data-sweep data-process></ol>
+  </div>
+</section>
+
+<!-- ======================= 2.9 GLOBAL MARKETS (ACT) ======================= -->
+<section class="act act--departure dark" id="markets">
+  <div class="act__track act__track--departure" data-act-track>
+    <div class="act__pin">
+      <div class="act__stage" data-gl="departure" aria-hidden="true"></div>
+
+      <div class="act__ui wrap">
+        <div class="act__centre act__centre--low" data-stage="0,0.20">
+          <h2 class="h-display">From India.<br />To global markets.</h2>
+        </div>
+
+        <div class="act__quad" data-market-quad></div>
+
+        <div class="act__centre" data-stage="0.60,0.88">
+          <span class="mono eyebrow">Our ambition</span>
+          <h2 class="h1">Connecting Indian spices with international buyers.</h2>
+          <p class="lead">India has a long-standing place in the global spice trade. Our aim is to connect carefully sourced Indian spices with importers, distributors, food manufacturers and other buyers.</p>
+        </div>
+
+        <div class="act__centre" data-stage="0.90,1.06">
+          <h2 class="h1">Indian spices. Global possibilities.</h2>
+        </div>
+      </div>
+
+      <div class="act__progress"><i data-act-progress></i></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================= 2.10 BUYERS ============================= -->
+<section class="services">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <span class="mono eyebrow">Who we serve</span>
+        <h2 class="h1" data-split-text>Built for global buyers.</h2>
+      </div>
+      <a href="markets.html" class="btn btn--outline">Export markets <span class="arrow" aria-hidden="true">→</span></a>
+    </div>
+    <p class="lead intro-lede" data-reveal>
+      Our products can support a range of B2B requirements, from bulk importers
+      to food manufacturers and spice processors.
+    </p>
+    <div class="ind-grid" data-sweep data-buyers></div>
+  </div>
+</section>
+
+<!-- ============================ 2.11 INSIGHTS ============================ -->
+<section class="insights" id="insights">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <span class="mono eyebrow">Insights</span>
+        <h2 class="h1" data-split-text>What's moving in spices.</h2>
+      </div>
+      <a href="insights.html" class="btn btn--outline">Read all insights <span class="arrow" aria-hidden="true">→</span></a>
+    </div>
+    <p class="lead intro-lede" data-reveal>
+      Practical perspectives on Indian spices, sourcing, quality, international
+      trade, and global market requirements.
+    </p>
+    
+   <!-- ======================= 2.11 ARTICLES CAROUSEL ======================= -->
+<section class="section articles-slider">
+  <div class="wrap">
+    
+    <!-- Drag-to-slide viewport container -->
+    <div class="cards-carousel" data-carousel>
+      <div class="cards-track" data-track>
+        
+        <!-- Card 1 -->
+        <article class="card card--slide">
+          <div class="card__bg">
+            <img src="assets/photo/turmeric.webp" alt="Turmeric" loading="lazy" decoding="async" />
+            <div class="card__overlay" style="background: rgba(180, 20, 60, 0.45);"></div>
+          </div>
+          <div class="card__content">
+            <span class="card__tag mono"><i class="tag-dot"></i>Product guide</span>
+            <div class="card__meta mono">01 / TURMERIC · 5 MIN READ</div>
+            <h3 class="card__title">Indian turmeric: origins, forms & applications</h3>
+            <p class="card__desc">Where Indian turmeric comes from, the forms it is traded in, and how buyers use it.</p>
+            <a href="article.html" class="btn btn--sm">Read Article <span class="arrow">→</span></a>
+          </div>
+        </article>
+
+        <!-- Card 2 -->
+        <article class="card card--slide">
+          <div class="card__bg">
+            <img src="assets/photo/chilli.webp" alt="Red chilli" loading="lazy" decoding="async" />
+            <div class="card__overlay" style="background: rgba(220, 80, 0, 0.45);"></div>
+          </div>
+          <div class="card__content">
+            <span class="card__tag mono"><i class="tag-dot"></i>Buyer guide</span>
+            <div class="card__meta mono">02 / RED CHILLI · 4 MIN READ</div>
+            <h3 class="card__title">What international buyers should know before sourcing</h3>
+            <p class="card__desc">Key specifications and standards worth settling before an enquiry becomes an order.</p>
+            <a href="article.html" class="btn btn--sm">Read Article <span class="arrow">→</span></a>
+          </div>
+        </article>
+
+        <!-- Card 3 -->
+        <article class="card card--slide">
+          <div class="card__bg">
+            <img src="assets/photo/pepper.webp" alt="Black pepper" loading="lazy" decoding="async" />
+            <div class="card__overlay" style="background: rgba(90, 40, 160, 0.45);"></div>
+          </div>
+          <div class="card__content">
+            <span class="card__tag mono"><i class="tag-dot"></i>Practical</span>
+            <div class="card__meta mono">03 / BLACK PEPPER · 6 MIN READ</div>
+            <h3 class="card__title">Whole vs. ground spices: right format for business</h3>
+            <p class="card__desc">How format affects shelf life, handling, storage, and production line performance.</p>
+            <a href="article.html" class="btn btn--sm">Read Article <span class="arrow">→</span></a>
+          </div>
+        </article>
+
+        <!-- Card 4 -->
+        <article class="card card--slide">
+          <div class="card__bg">
+            <img src="assets/photo/coriander.webp" alt="Coriander seeds" loading="lazy" decoding="async" />
+            <div class="card__overlay" style="background: rgba(180, 140, 20, 0.45);"></div>
+          </div>
+          <div class="card__content">
+            <span class="card__tag mono"><i class="tag-dot"></i>Industry</span>
+            <div class="card__meta mono">04 / CORIANDER · 4 MIN READ</div>
+            <h3 class="card__title">Navigating packaging & export moisture standards</h3>
+            <p class="card__desc">How moisture management and barrier bags preserve essential volatile oils.</p>
+            <a href="article.html" class="btn btn--sm">Read Article <span class="arrow">→</span></a>
+          </div>
+        </article>
+
+        <!-- Card 5 -->
+        <article class="card card--slide">
+          <div class="card__bg">
+            <img src="assets/photo/cumin.webp" alt="Cumin seeds" loading="lazy" decoding="async" />
+            <div class="card__overlay" style="background: rgba(200, 100, 20, 0.45);"></div>
+          </div>
+          <div class="card__content">
+            <span class="card__tag mono"><i class="tag-dot"></i>Market Trends</span>
+            <div class="card__meta mono">05 / CUMIN SEEDS · 5 MIN READ</div>
+            <h3 class="card__title">Global demand patterns for Indian Cumin seeds</h3>
+            <p class="card__desc">Analysis of harvesting cycles, purity grading, and export demand spikes.</p>
+            <a href="article.html" class="btn btn--sm">Read Article <span class="arrow">→</span></a>
+          </div>
+        </article>
+
+        <!-- Card 6 -->
+        <article class="card card--slide">
+          <div class="card__bg">
+            <img src="assets/photo/quality-testing.webp" alt="Spice Quality Testing" loading="lazy" decoding="async" />
+            <div class="card__overlay" style="background: rgba(20, 140, 100, 0.45);"></div>
+          </div>
+          <div class="card__content">
+            <span class="card__tag mono"><i class="tag-dot"></i>Quality Control</span>
+            <div class="card__meta mono">06 / COMPLIANCE · 7 MIN READ</div>
+            <h3 class="card__title">Understanding ASTA, ESA, and purity standards</h3>
+            <p class="card__desc">Navigating ASTA specifications, pesticide limits, and ASTA color values.</p>
+            <a href="article.html" class="btn btn--sm">Read Article <span class="arrow">→</span></a>
+          </div>
+        </article>
+
+      </div>
+
+      <!-- Bottom Pagination Dots -->
+      <div class="carousel__dots" data-dots></div>
+    </div>
+
+  </div>
+</section>
+
+</main>
+
+<footer data-chrome="footer"></footer>
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>
