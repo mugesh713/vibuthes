@@ -29,7 +29,9 @@ function productCard(p) {
       <ul class="pcard__forms">
         ${p.forms.map((f) => `<li class="mono">${esc(f)}</li>`).join('')}
       </ul>
-      <span class="service__link mono">View product <span class="arrow" aria-hidden="true">→</span></span>
+ <a href="contact.html" class="btn btn--small">
+  VIEW PRODUCT <span class="arrow" aria-hidden="true">→</span>
+</a>
     </div>
   </article>`;
 }

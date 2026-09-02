@@ -2263,15 +2263,6 @@ section::before, footer::before {
 }
 
 /* ======================= CARD STYLES ======================= */
-.card--slide {
-  flex: 0 0 320px;
-  height: 500px;
-  position: relative;
-  border-radius: 1.25rem;
-  overflow: hidden;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-  background-color: #222;
-}
 
 @media (min-width: 768px) {
   .card--slide {
@@ -2286,26 +2277,68 @@ section::before, footer::before {
   z-index: 1;
 }
 
+/* ======================= FIXED CARD STYLES ======================= */
+.card--slide {
+  flex: 0 0 320px;
+  height: 500px;
+  position: relative;
+  border-radius: 1.25rem;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  background-color: transparent; /* Remove dark background fallback */
+  transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), 
+              opacity 0.6s ease;
+  transform: scale(0.88);
+  /* REMOVED: opacity: 0.5 and filter: grayscale(20%) */
+  opacity: 0.85; 
+  filter: none; /* Keep colors full clarity on all slides */
+}
+
+@media (min-width: 768px) {
+  .card--slide {
+    flex: 0 0 380px;
+    height: 540px;
+  }
+}
+
+.card--slide.is-active {
+  transform: scale(1);
+  opacity: 1;
+  filter: none;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.25);
+}
+
+.card__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
 .card__bg img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
   pointer-events: none;
+  filter: none; /* Clear native image render */
 }
 
-/* Dark gradient overlay so images stay rich and vibrant */
+/* Light gradient at the very bottom ONLY so white text remains readable */
 .card__overlay {
+  display: block;
   position: absolute;
   inset: 0;
   z-index: 2;
   background: linear-gradient(
-    180deg, 
-    rgba(0, 0, 0, 0.1) 0%, 
-    rgba(0, 0, 0, 0.4) 40%, 
-    rgba(0, 0, 0, 0.88) 100%
+    to bottom,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0) 50%,
+    rgba(0, 0, 0, 0.65) 100%
   );
+  pointer-events: none;
 }
+
+
 
 .card__content {
   position: relative;
@@ -2415,4 +2448,43 @@ section::before, footer::before {
   width: 28px;
   border-radius: 10px;
   background: #eab308;
+}
+.btn--small {
+  padding: 0.5rem 0.75rem;
+  font-size: 0.58rem;
+  gap: 0.35rem;
+  width: fit-content;
+  align-self: flex-end;
+}
+/* Update .card__bg to ensure full clarity */
+.card__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.card__bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  pointer-events: none;
+  /* Optional: Boost contrast slightly for vibrant spice colors */
+  filter: contrast(1.05) brightness(1.02); 
+}
+
+/* Replace .card__overlay with a smooth bottom-only dark gradient */
+.card__overlay {
+  display: block; /* Enable overlay */
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  /* Gradients from transparent at top to dark at bottom for text contrast only */
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.1) 0%,
+    rgba(0, 0, 0, 0) 40%,
+    rgba(0, 0, 0, 0.75) 100%
+  );
+  pointer-events: none;
 }
