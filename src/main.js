@@ -456,3 +456,62 @@ document.addEventListener('DOMContentLoaded', () => {
   goToSlide(0);
   startAutoPlay();
 });
+document.addEventListener("DOMContentLoaded", () => {
+  const carousel = document.querySelector("[data-carousel]");
+  const track = document.querySelector("[data-track]");
+
+  if (!carousel || !track) return;
+
+  const originalCards = Array.from(track.children);
+  
+  // Clone cards to create seamless infinite loop
+  originalCards.forEach((card) => {
+    const clone = card.cloneNode(true);
+    track.appendChild(clone);
+  });
+
+  let animationFrameId = null;
+  let currentTranslate = 0;
+  let isPaused = false;
+  const speed = 1.2; // Adjust speed here (higher = faster)
+
+  const getSingleLoopWidth = () => {
+    const trackStyle = window.getComputedStyle(track);
+    const gap = parseFloat(trackStyle.gap) || 0;
+    let width = 0;
+    
+    originalCards.forEach((card) => {
+      width += card.offsetWidth + gap;
+    });
+    
+    return width;
+  };
+
+  const moveSlider = () => {
+    if (!isPaused) {
+      currentTranslate -= speed;
+      const singleLoopWidth = getSingleLoopWidth();
+
+      // Reset translate seamlessly when half track width is reached
+      if (Math.abs(currentTranslate) >= singleLoopWidth) {
+        currentTranslate = 0;
+      }
+
+      track.style.transform = `translateX(${currentTranslate}px)`;
+    }
+
+    animationFrameId = requestAnimationFrame(moveSlider);
+  };
+
+  // Pause movement on hover
+  carousel.addEventListener("mouseenter", () => {
+    isPaused = true;
+  });
+
+  carousel.addEventListener("mouseleave", () => {
+    isPaused = false;
+  });
+
+  // Start continuous motion loop
+  animationFrameId = requestAnimationFrame(moveSlider);
+});

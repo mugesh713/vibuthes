@@ -17,7 +17,7 @@ const env = (key, fallback) => {
 export const BRAND = {
   name: env('VITE_COMPANY_NAME', 'Alai'),
   short: env('VITE_COMPANY_SHORT', 'Alai'),
-  mark: env('VITE_COMPANY_MARK', 'M'),
+  mark: env('VITE_COMPANY_MARK', 'A'),
   wordmark: env('VITE_COMPANY_WORDMARK', 'Alai'),
   positioning: ['Roote.', 'Ready for the world.'],
   tagline: 'Indian spices. Global possibilities.',

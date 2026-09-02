@@ -2224,3 +2224,195 @@ section::before, footer::before {
   border-radius: 14px;
   background-color: #f0a81e; /* Active accent color */
 }
+/* ======================= CAROUSEL BASE ======================= */
+.articles-slider {
+  padding: 4rem 1rem;
+  background-color: #f4f3ef;
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.wrap {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.cards-carousel {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  cursor: grab;
+  padding: 1rem 0;
+}
+
+.cards-carousel:active {
+  cursor: grabbing;
+}
+
+.cards-track {
+  display: flex;
+  gap: 1.5rem;
+  will-change: transform;
+  transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  transform: translateX(0px);
+}
+
+.cards-track.is-dragging {
+  transition: none;
+}
+
+/* ======================= CARD STYLES ======================= */
+.card--slide {
+  flex: 0 0 320px;
+  height: 500px;
+  position: relative;
+  border-radius: 1.25rem;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  background-color: #222;
+}
+
+@media (min-width: 768px) {
+  .card--slide {
+    flex: 0 0 380px;
+    height: 540px;
+  }
+}
+
+.card__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.card__bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  pointer-events: none;
+}
+
+/* Dark gradient overlay so images stay rich and vibrant */
+.card__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: linear-gradient(
+    180deg, 
+    rgba(0, 0, 0, 0.1) 0%, 
+    rgba(0, 0, 0, 0.4) 40%, 
+    rgba(0, 0, 0, 0.88) 100%
+  );
+}
+
+.card__content {
+  position: relative;
+  z-index: 3;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 2rem;
+  color: #ffffff;
+  box-sizing: border-box;
+}
+
+.mono {
+  font-family: monospace, sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.card__tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 0.3rem 0.8rem;
+  border-radius: 1rem;
+  width: fit-content;
+  margin-bottom: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.tag-dot {
+  width: 6px;
+  height: 6px;
+  background-color: #facc15;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.card__meta {
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: 0.5rem;
+}
+
+.card__title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  line-height: 1.25;
+  margin: 0 0 0.75rem 0;
+  color: #ffffff;
+}
+
+.card__desc {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.45;
+  margin: 0 0 1.25rem 0;
+}
+
+.btn--sm {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #ffffff;
+  color: #000000;
+  padding: 0.65rem 1.25rem;
+  border-radius: 2rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-decoration: none;
+  text-transform: uppercase;
+  width: fit-content;
+  transition: all 0.2s ease;
+}
+
+.btn--sm:hover {
+  background: #eab308;
+  color: #000000;
+}
+
+/* ======================= DOTS ======================= */
+.carousel__dots {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+}
+
+.carousel__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #d1d5db;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.carousel__dot.is-active {
+  width: 28px;
+  border-radius: 10px;
+  background: #eab308;
+}
