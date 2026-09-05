@@ -9,6 +9,13 @@ import { trackProgress, range, makeSprite, NOISE_GLSL } from './util.js';
  * driven along the curve by scroll. The road is real geometry swept from a
  * spline, so markings and shoulders follow the bend instead of being painted
  * on a flat quad.
+ *
+ * NOTE: the truck travels the curve in the OPPOSITE direction — it starts
+ * near the port end and drives back down toward the start of the spline as
+ * scroll progress increases.
+ *
+ * The ship at the port end gently bobs, rolls, and pitches, as if it's
+ * actually floating on water rather than sitting fixed on the dock.
  */
 
 const HALF_W = 5.2;
@@ -17,6 +24,14 @@ const HALF_W = 5.2;
 const ORDER_ROAD = 1;
 const ORDER_PORT = 2;
 const ORDER_TRUCK = 5;
+
+// Floating-ship motion tuning.
+const FLOAT_BOB_AMP = 0.35;     // metres of vertical bob
+const FLOAT_BOB_SPEED = 0.6;    // radians/sec
+const FLOAT_ROLL_AMP = 0.02;    // radians of side-to-side roll
+const FLOAT_ROLL_SPEED = 0.45;  // radians/sec
+const FLOAT_PITCH_AMP = 0.012;  // radians of fore-aft pitch
+const FLOAT_PITCH_SPEED = 0.33; // radians/sec
 
 const ROAD_FRAG = /* glsl */ `
   uniform float uTime;
@@ -173,8 +188,16 @@ export class Road {
     // The berth the run is heading for, laid flat at the end of the road.
     this.port = makeSprite('assets/port.webp', 78);
     this.port.rotation.x = -Math.PI / 2;
-    this.port.position.set(44, 0.1, -128);
-    this.port.rotation.z = 0.22;
+
+    // Base pose, saved so the floating animation in update() can offset from
+    // it each frame (bob/roll/pitch) without drifting or fighting with the
+    // fixed placement below.
+    this.portBase = { x: 44, y: 0.1, z: -128, headingZ: 0.22 };
+    // Random phase offset so bob/roll/pitch don't all line up on a beat.
+    this.portFloatSeed = Math.random() * Math.PI * 2;
+
+    this.port.position.set(this.portBase.x, this.portBase.y, this.portBase.z);
+    this.port.rotation.z = this.portBase.headingZ;
     this.port.renderOrder = ORDER_PORT;
     this.scene.add(this.port);
   }
@@ -183,22 +206,42 @@ export class Road {
     const p = trackProgress(this.track);
     this.roadMat.uniforms.uTime.value = t;
 
-    // Scroll is distance travelled.
-    const s = THREE.MathUtils.clamp(p, 0.001, 0.999);
+    // Scroll is distance travelled. Walk the spline BACKWARDS (1 - p) so the
+    // truck now drives from the port end back down toward the start.
+    const s = THREE.MathUtils.clamp(1 - p, 0.001, 0.999);
     const pt = this.curve.getPointAt(s);
-    const tan = this.curve.getTangentAt(s);
+
+    // getTangentAt() always points the way of increasing t. Since we're now
+    // travelling toward decreasing t, the truck's actual direction of motion
+    // is the negated tangent — flip it before using it for heading/camera.
+    const tan = this.curve.getTangentAt(s).clone().negate();
 
     this.truckRig.position.set(pt.x, 0.35, pt.z);
     // The cab is at the LEFT of the artwork, so the truck's nose is -X. Steer to
-    // the tangent, then add half a turn or it drives the road backwards.
+    // the (now-flipped) direction of travel, then add half a turn or it drives
+    // the road backwards relative to the artwork.
     this.truckRig.rotation.y = Math.atan2(-tan.z, tan.x) + Math.PI;
     this.truck.material.opacity = range(p, 0.01, 0.08);
 
+    // Gentle floating motion: vertical bob plus a slight roll/pitch sway,
+    // layered on top of the fixed berth pose so the ship reads as afloat on
+    // water rather than bolted to the dock. Runs continuously so it's
+    // already moving by the time opacity fades it in near the end.
+    const seed = this.portFloatSeed;
+    const bob = Math.sin(t * FLOAT_BOB_SPEED + seed) * FLOAT_BOB_AMP;
+    const roll = Math.sin(t * FLOAT_ROLL_SPEED + seed * 1.3) * FLOAT_ROLL_AMP;
+    const pitch = Math.sin(t * FLOAT_PITCH_SPEED + seed * 0.7) * FLOAT_PITCH_AMP;
+
+    this.port.position.set(this.portBase.x, this.portBase.y + bob, this.portBase.z);
+    this.port.rotation.z = this.portBase.headingZ + roll;
+    this.port.rotation.y = pitch;
     this.port.material.opacity = range(p, 0.72, 0.95) * 0.95;
 
     // Camera rides above and slightly ahead, climbing as the run goes on.
+    // "Ahead" now means further along the reversed direction of travel, i.e.
+    // toward smaller s.
     const alt = THREE.MathUtils.lerp(46, 96, p);
-    const ahead = this.curve.getPointAt(Math.min(0.999, s + 0.05));
+    const ahead = this.curve.getPointAt(Math.max(0.001, s - 0.05));
     this.camera.position.set(
       THREE.MathUtils.lerp(pt.x, ahead.x, 0.4) + gl.pointer.x * 2,
       alt,

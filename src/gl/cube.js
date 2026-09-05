@@ -12,6 +12,12 @@ import { PRODUCTS } from '../brand.js';
  * v2 — expanded: more containers/boxes, more machines (2x forklifts,
  * 2x pallet jacks, 2x floor robots, 2x drones, dual filling/processing
  * lines), more workers, more racks, more trucks.
+ *
+ * v3 — mobile responsive: on narrow viewports the orthographic frustum
+ * zooms out a bit further (so the wide isometric scene still fits a
+ * portrait aspect ratio) and the whole rig is nudged slightly to the
+ * right, since the scene otherwise reads too far left against the
+ * dashboard/banner on narrow screens. Recalculated live on resize.
  */
 
 const BRAND = {
@@ -30,6 +36,15 @@ const SPICE_CONFIGS = [
   { name: 'Cardamom', color: 0x8FBC8F, hexStr: '#8FBC8F', icon: '🟢', shape: 'pod' }
 ];
 
+// Below this viewport width, treat the view as "mobile" for camera framing.
+const MOBILE_BREAKPOINT = 768;
+// How far the orthographic half-height (d) is padded out on mobile so a
+// narrow/portrait aspect ratio still shows the full width of the scene.
+const MOBILE_ORTHO_D = 13;
+const DESKTOP_ORTHO_D = 10;
+// How far the whole rig is nudged along +X on mobile.
+const MOBILE_RIG_SHIFT_X = 1.4;
+
 export class Cube {
   constructor(el, track) {
     this.el = el;
@@ -41,8 +56,10 @@ export class Cube {
     this.scene = new THREE.Scene();
     this.scene.background = new THREE.Color(0xf4f5f8);
 
+    this.isMobile = window.innerWidth < MOBILE_BREAKPOINT;
+
     const aspect = window.innerWidth / window.innerHeight;
-    const d = 10;
+    const d = this.isMobile ? MOBILE_ORTHO_D : DESKTOP_ORTHO_D;
     this.camera = new THREE.OrthographicCamera(-d * aspect, d * aspect, d, -d, 1, 1000);
 
     // Classic Isometric View Angle
@@ -50,6 +67,9 @@ export class Cube {
     this.camera.lookAt(0, 0, 0);
 
     this.rig = new THREE.Group();
+    // Nudge the whole scene slightly to the right on mobile — on a narrow
+    // portrait viewport the dashboard/banner otherwise crowds the left edge.
+    this.rig.position.x = this.isMobile ? MOBILE_RIG_SHIFT_X : 0;
     this.scene.add(this.rig);
 
     this.conveyorItems = [];
@@ -85,6 +105,37 @@ export class Cube {
     this._buildTrafficCones();
     this._buildWorkers();
     this._buildSpiceParticles();
+
+    this._bindResize();
+  }
+
+  // Keep the orthographic frustum (and mobile rig shift) correct across
+  // resizes and orientation changes, instead of only computing it once at
+  // construction time.
+  _bindResize() {
+    this._onResize = () => {
+      const wasMobile = this.isMobile;
+      this.isMobile = window.innerWidth < MOBILE_BREAKPOINT;
+
+      const aspect = window.innerWidth / window.innerHeight;
+      const d = this.isMobile ? MOBILE_ORTHO_D : DESKTOP_ORTHO_D;
+      this.camera.left = -d * aspect;
+      this.camera.right = d * aspect;
+      this.camera.top = d;
+      this.camera.bottom = -d;
+      this.camera.updateProjectionMatrix();
+
+      if (wasMobile !== this.isMobile) {
+        this.rig.position.x = this.isMobile ? MOBILE_RIG_SHIFT_X : 0;
+      }
+    };
+    window.addEventListener('resize', this._onResize);
+  }
+
+  dispose() {
+    if (this._onResize) {
+      window.removeEventListener('resize', this._onResize);
+    }
   }
 
   _buildLighting() {
