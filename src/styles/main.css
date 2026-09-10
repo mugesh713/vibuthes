@@ -560,7 +560,7 @@ section::before, footer::before {
 .act--range .act__head .h1 {
   font-size: 2rem;
   line-height: 1.05;
-  color: #4a2c1a;
+  color: #0a0a0a;
 }
 
 .act--range .act__cap {
@@ -572,14 +572,14 @@ section::before, footer::before {
 }
 
 .act--range .act__label {
-  font-size: 0.75rem;
-  color: #4a2c1a;
+  font-size: 1rem;
+  color: #0f0e0e;
 }
 
 .act--range .act__text {
-  font-size: 0.85rem;
+  font-size: 1.2rem;
   line-height: 1.4;
-  color: #4a2c1a;
+  color: #121212;
 }
 
 /* Ocean: centred statements and the four corner callouts. */
