@@ -1,4 +1,4 @@
-# Alai — WebGL site
+# MIDLANEEXPORTS — WebGL site
 
 An Indian spice export site built with Three.js, GSAP and Lenis. Seven pages,
 five scroll-scrubbed 3D acts, and a procedurally generated spice library.

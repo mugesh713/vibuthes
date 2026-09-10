@@ -15,10 +15,10 @@ const env = (key, fallback) => {
 };
 
 export const BRAND = {
-  name: env('VITE_COMPANY_NAME', 'Alai'),
-  short: env('VITE_COMPANY_SHORT', 'Alai'),
+  name: env('VITE_COMPANY_NAME', 'MIDLANEEXPORTS'),
+  short: env('VITE_COMPANY_SHORT', 'MIDLANEEXPORTS'),
   mark: env('VITE_COMPANY_MARK', 'A'),
-  wordmark: env('VITE_COMPANY_WORDMARK', 'Alai'),
+  wordmark: env('VITE_COMPANY_WORDMARK', 'MIDLANEEXPORTS'),
   positioning: ['Roote.', 'Ready for the world.'],
   tagline: 'Indian spices. Global possibilities.',
 };
@@ -28,7 +28,7 @@ export const CONTACT = {
   addressLines: ['Chennai', 'Tamil Nadu, India'],
   phone: env('VITE_CONTACT_PHONE', '+91 94441 82024'),
   phoneHref: 'tel:' + env('VITE_CONTACT_PHONE', '+91 94441 82024').replace(/[^\d+]/g, ''),
-  email: env('VITE_CONTACT_EMAIL', 'midlneexportsgmail.com'),
+  email: env('VITE_CONTACT_EMAIL', 'midlaneexportsgmail.com'),
   hours: 'Monday to Saturday, Indian Standard Time',
 };
 
