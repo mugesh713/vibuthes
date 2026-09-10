@@ -26,9 +26,9 @@ export const BRAND = {
 /** TODO: replace with verified details before launch. */
 export const CONTACT = {
   addressLines: ['Chennai', 'Tamil Nadu, India'],
-  phone: env('VITE_CONTACT_PHONE', '+91 00000 00000'),
-  phoneHref: 'tel:' + env('VITE_CONTACT_PHONE', '+910000000000').replace(/[^\d+]/g, ''),
-  email: env('VITE_CONTACT_EMAIL', 'enquiries@madhusree.co.in'),
+  phone: env('VITE_CONTACT_PHONE', '+91 94441 82024'),
+  phoneHref: 'tel:' + env('VITE_CONTACT_PHONE', '+91 94441 82024').replace(/[^\d+]/g, ''),
+  email: env('VITE_CONTACT_EMAIL', 'midlneexportsgmail.com'),
   hours: 'Monday to Saturday, Indian Standard Time',
 };
 

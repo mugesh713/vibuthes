@@ -28,12 +28,7 @@ const BRAND = {
 };
 
 const SPICE_CONFIGS = [
-  { name: 'Turmeric', color: 0xE8A317, hexStr: '#E8A317', icon: '🟡', shape: 'powder' },
-  { name: 'Cumin', color: 0x6B3A2A, hexStr: '#6B3A2A', icon: '🟤', shape: 'seed' },
-  { name: 'Coriander', color: 0xC4A882, hexStr: '#C4A882', icon: '⚪', shape: 'sphere' },
-  { name: 'Red Chilli', color: 0xCC0000, hexStr: '#CC0000', icon: '🔴', shape: 'flake' },
-  { name: 'Black Pepper', color: 0x1A1A1A, hexStr: '#1A1A1A', icon: '⚫', shape: 'sphere' },
-  { name: 'Cardamom', color: 0x8FBC8F, hexStr: '#8FBC8F', icon: '🟢', shape: 'pod' }
+  { name: 'Spicies', color: 0xE8A317, hexStr: '#685329', icon: '🟡', shape: 'powder' },
 ];
 
 // Below this viewport width, treat the view as "mobile" for camera framing.

@@ -556,8 +556,31 @@ section::before, footer::before {
   -webkit-text-stroke: 1px #ffffff45;
   margin-bottom: 0.6rem;
 }
-.act__label { display: block; margin-bottom: 0.5rem; color: var(--secondary); }
-.act__text { color: #ffffffc4; font-size: clamp(1rem, 1.3vw, 1.25rem); line-height: 1.5; margin: 0; }
+/* ONLY THE RANGE PAGE */
+.act--range .act__head .h1 {
+  font-size: 2rem;
+  line-height: 1.05;
+  color: #4a2c1a;
+}
+
+.act--range .act__cap {
+  left: 0;
+  right: auto;
+  bottom: 0;
+  width: 280px;
+  max-width: 280px;
+}
+
+.act--range .act__label {
+  font-size: 0.75rem;
+  color: #4a2c1a;
+}
+
+.act--range .act__text {
+  font-size: 0.85rem;
+  line-height: 1.4;
+  color: #4a2c1a;
+}
 
 /* Ocean: centred statements and the four corner callouts. */
 .act__centre {
